@@ -11,4 +11,6 @@ userRouter.get('/', (req, res) => {
 
 //! Appel des routes users
 router.use(userRouter);
+
+//! Export
 module.exports = router;
