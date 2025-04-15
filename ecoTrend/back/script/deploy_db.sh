@@ -15,5 +15,4 @@ psql -f ./script/create_table.sql
 
 # # Le script d'import de data
 
-# psql -f ./scripts/import_data.sql
-# # psql ./scripts/import_data.sql
+psql -f ./script/import_data.sql
