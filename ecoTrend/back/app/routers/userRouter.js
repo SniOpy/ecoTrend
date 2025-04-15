@@ -1,12 +1,14 @@
 const express = require('express');
 const userRouter = express.Router();
-// const { userController } = require('../controllers/index');
+const { userController } = require('../controllers/index');
 
 //! Routers GET
-userRouter.get('subscribe', (req, res) => {
-  res.send('Register page');
-});
+
 //! Router POST
+
+userRouter.post('/login', userController.login);
 // userRouter.post('/subscribe', userController.login);
+
+userRouter.post('/subscribe', userController.createUser);
 
 module.exports = userRouter;

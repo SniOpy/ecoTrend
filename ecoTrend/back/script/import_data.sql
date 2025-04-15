@@ -10,8 +10,8 @@ VALUES
 -- Insertion d'utilisateurs
 INSERT INTO "user" ("firstname", "lastname", "email", "user_password", "role_user")
 VALUES 
-('Alice', 'Dupont', 'alice@example.com', 'password123', 'admin'),
-('Bob', 'Martin', 'bob@example.com', 'password456', 'user');
+('Alice', 'Dupont', 'alice@example.com', '$2b$12$ADELEKs6qc35c9Cr46SknuxDXVl59bDt30jSeJ07aVw3h/OM27OaC', 'admin'),
+('Bob', 'Martin', 'bob@example.com', '$2y$10$2lxnieqamoRxNRYep7Dtqe8sE3Fnm2v3.lhnzvk71k1tdKT2DLQ9q', 'user');
 
 -- Insertion de produits
 INSERT INTO "product" ("name_product", "description_product", "price", "stock", "image_product", "category_id")
