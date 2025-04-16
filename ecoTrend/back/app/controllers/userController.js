@@ -1,6 +1,7 @@
 const userDatamapper = require('../datamapper/userDatamapper');
 const bcrypt = require('bcrypt');
 const validator = require('validator');
+const tokenController = require('../services/tokenController');
 
 const userController = {
   login: async (req, res) => {
@@ -14,21 +15,28 @@ const userController = {
       return res.status(401).json('Email invalide');
     }
 
-    const emailRegistered = await userDatamapper.getUserByEmail(email);
+    const userRegistered = await userDatamapper.getUserByEmail(email);
 
-    if (!emailRegistered) {
+    if (!userRegistered) {
       res.status(401).json('Couple identifiant / mot de passe incorrecte');
     }
 
-    const checkPassword = await bcrypt.compare(user_password, emailRegistered.user_password);
+    const checkPassword = await bcrypt.compare(user_password, userRegistered.user_password);
 
     if (!checkPassword) {
       return res.status(401).json('Couple identifiant / mot de passe incorrecte');
     }
+    delete userRegistered.user_password;
+    const { id, role_user } = userRegistered;
+    const token = tokenController.createToken(id, role_user);
+    userRegistered.token = token;
 
-    //! all is clear, we connect
+    res.cookie('access_token', 'Bearer ' + token, {
+      expires: new Date(Date.now() + 8 * 3600000), // cookie will be removed after 8 hours
+      httpOnly: true,
+    });
 
-    res.status(200).json('Connexion réussie');
+    res.status(200).json(userRegistered);
   },
 
   createUser: async (req, res) => {
