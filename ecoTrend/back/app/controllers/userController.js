@@ -4,26 +4,31 @@ const validator = require('validator');
 
 const userController = {
   login: async (req, res) => {
-    //! Get data from Form
-    const userLogged = req.body;
+    const { email, user_password } = req.body;
 
-    if (!userLogged) {
-      res.status(401).json("Vous n'avez pas accès");
+    if (!email || !user_password) {
+      return res.status(401).json('Veuillez renseigner votre email et votre mot de passe');
     }
 
-    const userConnected = await userDatamapper.getUserByEmail(userLogged);
+    if (!validator.isEmail(email)) {
+      return res.status(401).json('Email invalide');
+    }
 
-    //! If user exist ,
-    if (!userConnected) {
+    const emailRegistered = await userDatamapper.getUserByEmail(email);
+
+    if (!emailRegistered) {
+      res.status(401).json('Couple identifiant / mot de passe incorrecte');
+    }
+
+    const checkPassword = await bcrypt.compare(user_password, emailRegistered.user_password);
+
+    if (!checkPassword) {
       return res.status(401).json('Couple identifiant / mot de passe incorrecte');
     }
 
-    //! else we continue with hashing password
-    const userHashedPassword = userConnected.user_password;
+    //! all is clear, we connect
 
-    const passwordUserCheck = await bcrypt.compare(userLogged.user_password, userHashedPassword);
-
-    console.log(passwordUserCheck);
+    res.status(200).json('Connexion réussie');
   },
 
   createUser: async (req, res) => {

@@ -1,12 +1,10 @@
 const client = require('../services/clientPg');
 
 const userDatamapper = {
-  getUserByEmail: async (userLogged) => {
+  getUserByEmail: async (email) => {
     try {
-      const getUserByEmail = userLogged.email;
-
       const query = 'SELECT * FROM "user" WHERE "email"=$1';
-      const value = [getUserByEmail];
+      const value = [email];
 
       const userFounded = await client.query(query, value);
       return userFounded.rows[0];
