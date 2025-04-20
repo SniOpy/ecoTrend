@@ -5,6 +5,7 @@ import ErrorPage from './components/error/ErrorPage.jsx';
 import SigninPage from './components/pages/register/SigninPage.jsx';
 import AccountPage from './components/pages/account/AccountPage.jsx';
 import './App.css';
+import Logout from './reusable-ui/Logout.jsx';
 
 function App() {
   return (

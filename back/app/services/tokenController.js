@@ -20,7 +20,7 @@ const tokenController = {
     const tokenFromCookie = req.cookies?.access_token?.split(' ')[1];
 
     if (!tokenFromCookie) {
-      return res.status(401).json({ message: 'Pas de token dans les cookies' });
+      return res.status(401).json({ message: 'Aucun token dans le cookie' });
     }
 
     try {
@@ -30,6 +30,18 @@ const tokenController = {
     } catch (err) {
       return res.status(401).json({ message: 'Token invalide' });
     }
+  },
+
+  checkTokenRemove: (req, res) => {
+    res
+      .clearCookie('access_token', {
+        expires: new Date(Date.now() + 8 * 3600000), // cookie will be removed after 8 hours
+        httpOnly: true,
+        sameSite: 'none',
+        maxAge: 3600000,
+        secure: process.env.NODE_ENV,
+      })
+      .json('Supression du cookie');
   },
 };
 
