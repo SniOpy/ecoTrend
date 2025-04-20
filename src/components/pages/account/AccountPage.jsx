@@ -1,10 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useUser } from '../../../hooks/UserContext.jsx';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function AccountPage() {
   const { userData, setUserData } = useUser();
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+
+  if (!userData) {
+    navigate('/login');
+  }
 
   useEffect(() => {
     const storedData = localStorage.getItem('userData');
@@ -18,8 +25,38 @@ export default function AccountPage() {
         setUserData(res.data.user);
         localStorage.setItem('userData', JSON.stringify(res.data.user));
       })
-      .catch((err) => console.error('Non connecté', err));
+      .catch((err) => console.error('Non connecté', err))
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      const res = await axios.post('http://localhost:3000/logout', null, {
+        withCredentials: true,
+      });
+
+      if (res.status === 200) {
+        localStorage.removeItem('userData');
+        setUserData(null); // initialize state
+
+        navigate('/login'); // redirection to login
+      } else {
+        console.error('Erreur de déconnexion');
+      }
+    } catch (error) {
+      console.error('Erreur de requête : ', error);
+    }
+  };
+
+  if (isLoading) {
+    return <p>Chargement des données...</p>;
+  }
+
+  if (!userData) {
+    return navigate('/login');
+  }
 
   return (
     <AccountStyled>
@@ -79,8 +116,8 @@ export default function AccountPage() {
               Nouveau mot de passe
               <input type="password" name="password" />
             </label>
-            <button type="submit">Mettre à jour</button>
-            <button type="submit" className="logout">
+            <button type="button">Mettre à jour</button>
+            <button type="button" className="logout" onClick={handleLogout}>
               Déconnexion
             </button>
           </form>

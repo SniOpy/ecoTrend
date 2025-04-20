@@ -34,6 +34,7 @@ const userController = {
     res.cookie('access_token', 'Bearer ' + token, {
       expires: new Date(Date.now() + 8 * 3600000), // cookie will be removed after 8 hours
       httpOnly: true,
+      sameSite: 'none',
       maxAge: 3600000,
       secure: process.env.NODE_ENV,
     });
