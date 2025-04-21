@@ -4,8 +4,8 @@ import Homepage from './components/pages/Homepage';
 import ErrorPage from './components/error/ErrorPage.jsx';
 import SigninPage from './components/pages/register/SigninPage.jsx';
 import AccountPage from './components/pages/account/AccountPage.jsx';
+import Products from './components/pages/products/Products.jsx';
 import './App.css';
-import Logout from './reusable-ui/Logout.jsx';
 
 function App() {
   return (
@@ -14,6 +14,7 @@ function App() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signin" element={<SigninPage />} />
       <Route path="/account" element={<AccountPage />} />
+      <Route path="/products" element={<Products />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
