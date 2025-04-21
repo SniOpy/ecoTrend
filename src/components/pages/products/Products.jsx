@@ -17,13 +17,6 @@ export default function Products() {
 
   return (
     <ProductsStyled>
-      <header className="header">
-        <div className="logo">
-          <img src="/images/logo-ecotrend.png" alt="EcoTrend logo" />
-          <span>EcoTrend</span>
-        </div>
-      </header>
-
       <div className="container">
         <h1 className="title">Products</h1>
 
@@ -45,30 +38,6 @@ const ProductsStyled = styled.div`
   background-color: #fcfcfc;
   font-family: 'Open Sans', sans-serif;
   padding: 40px 20px;
-
-  .header {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    margin-bottom: 20px;
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-
-      img {
-        height: 40px;
-      }
-
-      span {
-        font-size: 1.4rem;
-        font-family: 'Poppins', sans-serif;
-        color: #2e7d32;
-        font-weight: 600;
-      }
-    }
-  }
 
   .container {
     max-width: 1080px;
