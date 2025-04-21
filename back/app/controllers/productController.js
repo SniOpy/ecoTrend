@@ -13,6 +13,9 @@ const productController = {
       res.status(404).json({ message: "Aucun produit n'a été trouvé" });
     }
   },
+  findProductById: (req, res) => {
+    res.json('product by id');
+  },
 };
 
 module.exports = productController;

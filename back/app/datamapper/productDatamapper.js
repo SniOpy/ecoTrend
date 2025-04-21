@@ -11,6 +11,8 @@ const productDatamapper = {
       return console.error('Aucun produit ne correspond à cette requête');
     }
   },
+
+  getProductById: () => {},
 };
 
 module.exports = productDatamapper;
