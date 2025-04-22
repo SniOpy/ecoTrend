@@ -22,10 +22,7 @@ export default function Products() {
 
         <div className="filters">
           <select>
-            <option>All Categories</option>
-          </select>
-          <select>
-            <option>Sort by: Newest</option>
+            <option>Catégories</option>
           </select>
         </div>
         <Product products={products} />

@@ -7,6 +7,7 @@ import AccountPage from './components/pages/account/AccountPage.jsx';
 import Products from './components/pages/products/Products.jsx';
 import Layout from './layout/Layout.jsx';
 import './App.css';
+import ProductPage from './components/pages/products/ProductPage.jsx';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/signin" element={<SigninPage />} />
         <Route path="/account" element={<AccountPage />} />
         <Route path="/products" element={<Products />} />
+        <Route path="/product/:id" element={<ProductPage />} />
         <Route path="*" element={<ErrorPage />} />
       </Route>
     </Routes>
