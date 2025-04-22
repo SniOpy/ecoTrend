@@ -3,9 +3,12 @@ BEGIN;
 -- Insertion de catégories
 INSERT INTO "category" ("name_category")
 VALUES 
-('Électronique'),
-('Maison'),
-('Livres');
+('T-shirt'),
+('Chaussures'),
+('Jeans'),
+('Accessoires'),
+('Pulls');
+
 
 -- Insertion d'utilisateurs
 INSERT INTO "user" ("firstname", "lastname", "email", "user_password", "role_user")
@@ -16,9 +19,13 @@ VALUES
 -- Insertion de produits
 INSERT INTO "product" ("name_product", "description_product", "price", "stock", "image_product", "category_id")
 VALUES 
-('Smartphone', 'Un super smartphone', 499.99, 10, 'smartphone.jpg', 1),
-('Aspirateur', 'Aspirateur silencieux', 199.99, 5, 'aspirateur.jpg', 2),
-('Roman SF', 'Un roman de science-fiction captivant', 15.99, 20, 'livre_sf.jpg', 3);
+('Jeans', 'Jean éco-lavé en coton recyclé, confortable et durable au quotidien.', 59.99, 10, 'jeans.png', 3),
+('Sweater', 'Pull en lin naturel, léger, respirant et parfait pour la mi-saison.', 199.99, 5, 'sweater.png', 5), 
+('Chaussures', 'Sneakers unisexes en matériaux recyclés, à la fois stylées et responsables.', 119.90, 20, 'chaussures.png', 2),
+('Casquette', 'Casquette minimaliste en toile de coton biologique non teintée.', 21.99, 20, 'casquette.png', 4),
+('Tote', 'Sac fourre-tout en toile bio, solide et pratique pour vos essentiels.', 45.99, 20, 'tote.png', 4),
+('Porte-feuille', 'Compact, léger et 100 % végétal, ce portefeuille en liège allie esthétique naturelle et durabilité.', 18.75, 20, 'porte-feuille.png', 4),
+('Echarpe', 'Élégante et douce, cette écharpe en coton biologique offre confort et légèreté.', 45.99, 20, 'echarpe.png', 4);
 
 -- Insertion de commandes
 INSERT INTO "order" ("user_id", "status_order")
