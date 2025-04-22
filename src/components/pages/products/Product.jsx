@@ -1,7 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 export default function Product({ products }) {
+  const navigate = useNavigate();
+
+  const handleRedirection = (id) => {
+    navigate(`/product/${id}`);
+  };
   return (
     <ProductStyled>
       {products.map((product) => (
@@ -11,8 +17,13 @@ export default function Product({ products }) {
             <h3>{product.name_product}</h3>
             <p>{product.description_product}</p>
             <span className="price">{product.price.toFixed(2)} €</span>
-            <br />
-            <button className="add-to-cart">Ajouter au panier</button>
+
+            <div className="actions">
+              <button className="btn primary">Ajouter au panier</button>
+              <button className="btn secondary" onClick={() => handleRedirection(product.id)}>
+                Fiche produit
+              </button>
+            </div>
           </div>
         </div>
       ))}
@@ -22,16 +33,17 @@ export default function Product({ products }) {
 
 const ProductStyled = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 32px;
+  padding: 20px;
 
   .card {
-    background-color: #fff;
-    border: 1px solid #eee;
-    border-radius: 12px;
-    padding: 16px;
+    background-color: #fdfaf5;
+    border: 1px solid #e8e8e8;
+    border-radius: 14px;
+    padding: 20px;
     text-align: center;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
     transition: transform 0.2s ease;
     display: flex;
     flex-direction: column;
@@ -42,51 +54,71 @@ const ProductStyled = styled.div`
     }
 
     img {
-      height: 180px;
+      height: 170px;
       object-fit: contain;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
+      border-radius: 8px;
     }
 
     .info {
-      flex-grow: 1; /* prend l'espace restant */
+      flex-grow: 1;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
 
       h3 {
         font-family: 'Poppins', sans-serif;
-        font-size: 1rem;
-        margin-bottom: 6px;
-        color: #212121;
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+        color: #2e2e2e;
       }
 
       p {
         font-size: 0.9rem;
-        color: #757575;
-        margin-bottom: 8px;
+        color: #666;
+        margin-bottom: 12px;
+        min-height: 40px;
       }
 
       .price {
-        font-weight: 600;
         font-size: 1rem;
-        color: #2e7d32;
-        margin-bottom: 16px;
+        font-weight: 600;
+        color: #388e3c;
+        margin-bottom: 18px;
       }
 
-      .add-to-cart {
-        margin-top: auto;
-        background-color: #4caf50;
-        color: white;
-        border: none;
-        padding: 10px 16px;
-        border-radius: 6px;
-        font-size: 0.95rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
+      .actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
 
-        &:hover {
-          background-color: #2e7d32;
+        .btn {
+          padding: 8px 14px;
+          font-size: 0.9rem;
+          border-radius: 5px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          border: none;
+        }
+
+        .primary {
+          background-color: #4caf50;
+          color: white;
+
+          &:hover {
+            background-color: #2e7d32;
+          }
+        }
+
+        .secondary {
+          background-color: transparent;
+          color: #4caf50;
+          border: 1px solid #4caf50;
+
+          &:hover {
+            background-color: #f1fdf1;
+          }
         }
       }
     }

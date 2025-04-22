@@ -12,7 +12,17 @@ const productDatamapper = {
     }
   },
 
-  getProductById: () => {},
+  getProductById: async (id) => {
+    try {
+      const query = 'SELECT * FROM "product" WHERE "id"=$1';
+      const value = [id];
+
+      const products = await client.query(query, value);
+      return products.rows[0];
+    } catch (error) {
+      return console.error('Aucun produit ne correspond à cet identifiant');
+    }
+  },
 };
 
 module.exports = productDatamapper;
