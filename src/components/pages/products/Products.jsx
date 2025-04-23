@@ -18,7 +18,7 @@ export default function Products() {
   return (
     <ProductsStyled>
       <div className="container">
-        <h1 className="title">Products</h1>
+        <h1 className="title">Catalogue</h1>
 
         <div className="filters">
           <select>
