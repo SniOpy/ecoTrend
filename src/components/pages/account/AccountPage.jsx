@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useUser } from '../../../hooks/UserContext.jsx';
+import { useUser } from '../../../context/UserContext.jsx';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 

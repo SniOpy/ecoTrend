@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '../hooks/UserContext';
+import { useUser } from '../context/UserContext';
 import axios from 'axios';
 
 export default function Logout() {

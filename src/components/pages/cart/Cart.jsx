@@ -1,9 +1,10 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
+import LayoutContext from '../../../context/LayoutContext';
 
 export default function Cart() {
-  const [cartItems, setCartItems] = useState([]);
+  const { cartItems, setCartItems } = useContext(LayoutContext);
 
   useEffect(() => {
     const fetchData = async () => {
