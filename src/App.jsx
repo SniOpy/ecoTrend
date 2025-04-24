@@ -6,8 +6,9 @@ import SigninPage from './components/pages/register/SigninPage.jsx';
 import AccountPage from './components/pages/account/AccountPage.jsx';
 import Products from './components/pages/products/Products.jsx';
 import Layout from './layout/Layout.jsx';
-import './App.css';
 import ProductPage from './components/pages/products/ProductPage.jsx';
+import Cart from './components/pages/cart/Cart.jsx';
+import './App.css';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/account" element={<AccountPage />} />
         <Route path="/products" element={<Products />} />
         <Route path="/product/:id" element={<ProductPage />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="*" element={<ErrorPage />} />
       </Route>
     </Routes>

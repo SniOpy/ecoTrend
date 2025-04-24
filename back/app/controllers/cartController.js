@@ -3,10 +3,10 @@ const cartDatamapper = require('../datamapper/cartDatamapper');
 const cartController = {
   findAllProducts: async (req, res) => {
     try {
-      const cartProduct = await cartDatamapper.getProductsCart();
+      const cartProduct = await cartDatamapper.getProductsCartById();
 
       if (!cartProduct) {
-        res.status(404).json('Aucun produit dans le panier');
+        return res.status(200).json({ message: 'Le panier est vide', products: [] });
       }
 
       res.status(200).json(cartProduct);
