@@ -11,11 +11,11 @@ export default function Product() {
     <ProductStyled>
       {products.map((product) => (
         <div className="card" key={product.id}>
-          <img src={`/images/products/${product.image_product}`} alt={product.name_product} />
+          <img src={`/images/products/${product.image}`} alt={product.name} />
           <div className="info">
-            <h3>{product.name_product}</h3>
-            <p>{product.description_product}</p>
-            <span className="price">{product.price.toFixed(2)} €</span>
+            <h3>{product.name}</h3>
+            <p>{product.description}</p>
+            <span className="price"> {product.price.toFixed(2)} €</span>
 
             <div className="actions">
               <button className="btn primary" onClick={() => handleAdd(product.id)}>

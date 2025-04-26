@@ -30,9 +30,9 @@ export default function Cart() {
           <div className="items">
             {cartItems.map((item) => (
               <div className="cart-item" key={item.id}>
-                <img src={`/images/products/${item.image_product}`} alt={item.name_product} />
+                <img src={`/images/products/${item.image}`} alt={item.name} />
                 <div className="details">
-                  <h3>{item.name_product}</h3>
+                  <h3>{item.name}</h3>
                   <div className="quantity-control">
                     <label>Quantité :</label>
                     <input

@@ -4,12 +4,12 @@ const app = express();
 const router = require('./app/routers');
 var cors = require('cors');
 const cookieParser = require('cookie-parser');
-const port = 3000 || process.env.PORT;
+const port = process.env.PORT || 3000;
 
 //* Setup
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: '',
     credentials: true,
   })
 );

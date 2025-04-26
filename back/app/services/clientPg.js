@@ -2,13 +2,15 @@ const { Pool } = require('pg');
 require('dotenv').config();
 
 const client = new Pool({
-  user: process.env.PG_USER,
-  host: process.env.PG_HOSTSERVER,
-  database: process.env.PG_DATABASE,
-  password: process.env.PG_PASSWORD,
-  port: process.env.PG_DBPORT,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
-client.connect;
+client
+  .connect()
+  .then(() => console.log('connexion établie'))
+  .catch((err) => console.error('Erreur de connexion : ', err));
 
 module.exports = client;
