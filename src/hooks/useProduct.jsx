@@ -1,16 +1,13 @@
-import { useContext, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import LayoutContext from '../context/LayoutContext';
 import { useFetchProducts } from './useFetchProducts.jsx';
 
 export const useProduct = () => {
+  const [cartItems, setCartItems] = useState([]);
   const navigate = useNavigate();
-  const { cartItems, setCartItems } = useContext(LayoutContext);
   const { products } = useFetchProducts();
 
-  useEffect(() => {
-    console.log(cartItems);
-  }, [cartItems]);
+  useEffect(() => {}, [cartItems]);
 
   const handleRedirection = (id) => {
     navigate(`/product/${id}`);
@@ -42,9 +39,17 @@ export const useProduct = () => {
     }
   };
 
+  const handleDelete = (id) => {
+    const copyCartItems = [...cartItems];
+    const copyCartItemsUpdated = copyCartItems.filter((product) => product.id !== id);
+
+    setCartItems(copyCartItemsUpdated);
+  };
+
   const totalPrice = cartItems.reduce((acc, item) => {
-    return acc + item.price * item.quantity;
+    const total = acc + item.price * item.quantity;
+    return total;
   }, 0);
 
-  return { handleRedirection, handleAdd, totalPrice };
+  return { handleRedirection, handleAdd, totalPrice, handleDelete, cartItems, setCartItems };
 };

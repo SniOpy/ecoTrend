@@ -1,13 +1,16 @@
 import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import LayoutContext from '../../../context/LayoutContext';
-import { useProduct } from '../../../hooks/useProduct';
 
 export default function Cart() {
-  const { cartItems } = useContext(LayoutContext);
-  const { totalPrice } = useProduct();
-  useEffect(() => {}, [cartItems]);
+  const { cartItems, totalPrice, handleDelete } = useContext(LayoutContext);
 
+  useEffect(() => {
+    console.log(cartItems);
+  }, [cartItems]);
+  const onDelete = (id) => {
+    handleDelete(id);
+  };
   return (
     <CartStyled>
       <div className="container">
@@ -18,14 +21,16 @@ export default function Cart() {
         ) : (
           <div className="items">
             {cartItems.map((item) => (
-              <div className="cart-item" key={item.product_id}>
+              <div className="cart-item" key={item.id}>
                 <img src={`/images/products/${item.image_product}`} alt={item.name_product} />
                 <div className="details">
                   <h3>{item.name_product}</h3>
                   <p>Quantité : {item.quantity}</p>
                   <span className="price">{(item.price * item.quantity).toFixed(2)} €</span>
                 </div>
-                <button className="remove">×</button>
+                <button className="remove" onClick={() => onDelete(item.id)}>
+                  ×
+                </button>
               </div>
             ))}
           </div>
@@ -35,7 +40,7 @@ export default function Cart() {
           <div className="summary">
             <div className="total">
               <span>Total :</span>
-              <strong>{totalPrice} €</strong>
+              <strong>{totalPrice.toFixed(2)} €</strong>
             </div>
             <button className="checkout">Valider la commande</button>
           </div>
