@@ -17,7 +17,7 @@ const productDatamapper = {
       const query = `
         SELECT 
           p.*, 
-          json_build_object('id', c.id, 'name_category', c.name_category) as category
+          json_build_object('name_category', c.name_category) as category
         FROM 
           "product" p
         LEFT JOIN 

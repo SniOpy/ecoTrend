@@ -1,31 +1,19 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Product from './Product';
 
 export default function Products() {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get('http://localhost:3000/products', { withCredentials: true })
-      .then((res) => {
-        setProducts(res.data);
-      })
-      .catch((err) => console.error('Non connecté', err));
-  }, [products]);
-
   return (
     <ProductsStyled>
       <div className="container">
-        <h1 className="title">Products</h1>
+        <h1 className="title">Catalogue</h1>
 
         <div className="filters">
           <select>
             <option>Catégories</option>
           </select>
         </div>
-        <Product products={products} />
+        <Product />
       </div>
     </ProductsStyled>
   );

@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useFetchProducts } from '../../../hooks/useFetchProducts';
+import LayoutContext from '../../../context/LayoutContext';
 
-export default function Product({ products }) {
-  const navigate = useNavigate();
+export default function Product() {
+  const { handleAdd, handleRedirection } = useContext(LayoutContext);
+  const { products } = useFetchProducts();
 
-  const handleRedirection = (id) => {
-    navigate(`/product/${id}`);
-  };
   return (
     <ProductStyled>
       {products.map((product) => (
@@ -19,7 +18,9 @@ export default function Product({ products }) {
             <span className="price">{product.price.toFixed(2)} €</span>
 
             <div className="actions">
-              <button className="btn primary">Ajouter au panier</button>
+              <button className="btn primary" onClick={() => handleAdd(product.id)}>
+                Ajouter au panier
+              </button>
               <button className="btn secondary" onClick={() => handleRedirection(product.id)}>
                 Fiche produit
               </button>
