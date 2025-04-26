@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFetchProducts } from './useFetchProducts.jsx';
+import { notify } from '../utils/notify.js';
 
 export const useProduct = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -30,12 +31,12 @@ export const useProduct = () => {
       const updatedCart = [...cartItems];
       updatedCart[indexOfProductAlreadyInCart].quantity += 1;
       setCartItems(updatedCart);
-      console.log('produit ajouté');
     } else {
       // add product
       const productWithQuantity = { ...productFound, quantity: 1 };
       const updatedCart = [...cartItems, productWithQuantity];
       setCartItems(updatedCart);
+      notify('success', 'Produit ajouté avec succès ');
     }
   };
 
@@ -44,6 +45,7 @@ export const useProduct = () => {
     const copyCartItemsUpdated = copyCartItems.filter((product) => product.id !== id);
 
     setCartItems(copyCartItemsUpdated);
+    notify('error', 'Votre produit a été supprimé ');
   };
 
   const totalPrice = cartItems.reduce((acc, item) => {

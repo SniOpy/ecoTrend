@@ -4,6 +4,8 @@ import { Outlet } from 'react-router-dom';
 import LayoutContext from '../context/LayoutContext.jsx';
 import styled from 'styled-components';
 import { useProduct } from '../hooks/useProduct.jsx';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Layout() {
   const { handleAdd, handleRedirection, totalPrice, handleDelete, cartItems, setCartItems } =
@@ -24,6 +26,14 @@ export default function Layout() {
         <main>
           <Outlet />
         </main>
+        <ToastContainer
+          position="bottom-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          draggable
+        />
       </LayoutStyled>
     </LayoutContext.Provider>
   );
