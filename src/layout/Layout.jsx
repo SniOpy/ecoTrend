@@ -7,13 +7,14 @@ import { useProduct } from '../hooks/useProduct.jsx';
 
 export default function Layout() {
   const [cartItems, setCartItems] = useState([]);
-  const { handleAdd, handleRedirection } = useProduct();
+  const { handleAdd, handleRedirection, totalPrice } = useProduct();
 
   const layoutContext = {
     cartItems,
     setCartItems,
     handleAdd,
     handleRedirection,
+    totalPrice,
   };
   return (
     <LayoutContext.Provider value={layoutContext}>

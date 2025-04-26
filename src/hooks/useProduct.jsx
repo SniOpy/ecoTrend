@@ -42,5 +42,9 @@ export const useProduct = () => {
     }
   };
 
-  return { handleRedirection, handleAdd };
+  const totalPrice = cartItems.reduce((acc, item) => {
+    return acc + item.price * item.quantity;
+  }, 0);
+
+  return { handleRedirection, handleAdd, totalPrice };
 };
