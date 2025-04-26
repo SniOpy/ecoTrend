@@ -7,6 +7,8 @@ export default function Product() {
   const { handleAdd, handleRedirection } = useContext(LayoutContext);
   const { products } = useFetchProducts();
 
+  console.log('products:', products); // pour debug ici aussi
+
   return (
     <ProductStyled>
       {products.map((product) => (
