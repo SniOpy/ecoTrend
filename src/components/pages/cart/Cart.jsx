@@ -1,14 +1,12 @@
 import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import LayoutContext from '../../../context/LayoutContext';
+import { useProduct } from '../../../hooks/useProduct';
 
 export default function Cart() {
   const { cartItems } = useContext(LayoutContext);
-
-  // displays the basket in real time
-  useEffect(() => {
-    console.log(cartItems);
-  }, [cartItems]);
+  const { totalPrice } = useProduct();
+  useEffect(() => {}, [cartItems]);
 
   return (
     <CartStyled>
@@ -37,7 +35,7 @@ export default function Cart() {
           <div className="summary">
             <div className="total">
               <span>Total :</span>
-              <strong>15 €</strong>
+              <strong>{totalPrice} €</strong>
             </div>
             <button className="checkout">Valider la commande</button>
           </div>
