@@ -8,7 +8,8 @@ const productDatamapper = {
       const products = await client.query(query);
       return products.rows;
     } catch (error) {
-      return console.error('Aucun produit ne correspond à cette requête');
+      console.error('Erreur SQL:', error.message);
+      throw error;
     }
   },
 
