@@ -8,9 +8,10 @@ export const useFetchProducts = () => {
     axios
       .get(`${import.meta.env.VITE_BACKEND_URL}/products`, { withCredentials: true })
       .then((res) => {
+        console.log('Données reçues :', res.data); // Vérification
         setProducts(res.data);
       })
-      .catch((err) => console.error('Non connecté', err));
+      .catch((err) => console.error('Erreur connexion', err));
   }, []);
 
   return { products };
