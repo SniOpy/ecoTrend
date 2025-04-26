@@ -9,13 +9,17 @@ const port = process.env.PORT || 3000;
 //* Setup
 app.use(
   cors({
-    origin: '',
+    origin: ['https://eco-trend-92622n2j4-sniopys-projects.vercel.app', 'http://localhost:5173'],
     credentials: true,
   })
 );
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
+
+app.get('/', (req, res) => {
+  res.send('API ecoTrend fonctionne 🚀');
+});
 
 app.use(router);
 
@@ -25,5 +29,5 @@ app.use((req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`API ecoTrend en route`);
+  console.log(`API ecoTrend en route sur le port ${port}`);
 });
