@@ -6,8 +6,8 @@ import styled from 'styled-components';
 import { useProduct } from '../hooks/useProduct.jsx';
 
 export default function Layout() {
-  const [cartItems, setCartItems] = useState([]);
-  const { handleAdd, handleRedirection, totalPrice } = useProduct();
+  const { handleAdd, handleRedirection, totalPrice, handleDelete, cartItems, setCartItems } =
+    useProduct();
 
   const layoutContext = {
     cartItems,
@@ -15,6 +15,7 @@ export default function Layout() {
     handleAdd,
     handleRedirection,
     totalPrice,
+    handleDelete,
   };
   return (
     <LayoutContext.Provider value={layoutContext}>

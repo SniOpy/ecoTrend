@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
-import { useProduct } from '../../../hooks/useProduct';
 import { useFetchProducts } from '../../../hooks/useFetchProducts';
+import LayoutContext from '../../../context/LayoutContext';
 
 export default function Product() {
-  const { handleAdd, handleRedirection } = useProduct();
+  const { handleAdd, handleRedirection } = useContext(LayoutContext);
   const { products } = useFetchProducts();
 
   return (
