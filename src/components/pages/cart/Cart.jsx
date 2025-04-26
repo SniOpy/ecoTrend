@@ -3,14 +3,22 @@ import styled from 'styled-components';
 import LayoutContext from '../../../context/LayoutContext';
 
 export default function Cart() {
-  const { cartItems, totalPrice, handleDelete } = useContext(LayoutContext);
+  const { cartItems, totalPrice, handleDelete, setCartItems } = useContext(LayoutContext);
 
-  useEffect(() => {
-    console.log(cartItems);
-  }, [cartItems]);
   const onDelete = (id) => {
     handleDelete(id);
   };
+
+  const handleQuantityChange = (id, newQuantity) => {
+    const updatedCart = cartItems.map((item) => {
+      if (item.id === id) {
+        return { ...item, quantity: Number(newQuantity) };
+      }
+      return item;
+    });
+    setCartItems(updatedCart);
+  };
+
   return (
     <CartStyled>
       <div className="container">
@@ -25,7 +33,15 @@ export default function Cart() {
                 <img src={`/images/products/${item.image_product}`} alt={item.name_product} />
                 <div className="details">
                   <h3>{item.name_product}</h3>
-                  <p>Quantité : {item.quantity}</p>
+                  <div className="quantity-control">
+                    <label>Quantité :</label>
+                    <input
+                      type="number"
+                      min="1"
+                      value={item.quantity}
+                      onChange={(e) => handleQuantityChange(item.id, e.target.value)}
+                    />
+                  </div>
                   <span className="price">{(item.price * item.quantity).toFixed(2)} €</span>
                 </div>
                 <button className="remove" onClick={() => onDelete(item.id)}>
@@ -103,14 +119,29 @@ const CartStyled = styled.div`
 
       h3 {
         font-size: 1.1rem;
-        margin-bottom: 4px;
+        margin-bottom: 8px;
         color: #212121;
       }
 
-      p {
-        font-size: 0.9rem;
-        color: #757575;
-        margin-bottom: 4px;
+      .quantity-control {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+
+        label {
+          font-size: 0.9rem;
+          color: #757575;
+        }
+
+        input {
+          width: 60px;
+          padding: 4px 8px;
+          font-size: 1rem;
+          border: 1px solid #ccc;
+          border-radius: 6px;
+          text-align: center;
+        }
       }
 
       .price {
