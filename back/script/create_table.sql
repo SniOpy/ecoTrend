@@ -20,11 +20,11 @@ CREATE TABLE "user" (
 
 CREATE TABLE "product" (
   id INTEGER  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  name_product VARCHAR(42) NOT NULL,
-  description_product TEXT NOT NULL,
+  name VARCHAR(42) NOT NULL,
+  description TEXT NOT NULL,
   price FLOAT NOT NULL,
   stock INTEGER DEFAULT 0,
-  image_product VARCHAR(42) NOT NULL,
+  image VARCHAR(42) NOT NULL,
   category_id INTEGER,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ
