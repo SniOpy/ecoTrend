@@ -1,40 +1,12 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import LayoutContext from '../../../context/LayoutContext';
+import { useProduct } from '../../../hooks/useProduct';
+import { useFetchProducts } from '../../../hooks/useFetchProducts';
 
-export default function Product({ products }) {
-  const navigate = useNavigate();
-  const { cartItems, setCartItems } = useContext(LayoutContext);
+export default function Product() {
+  const { handleAdd, handleRedirection } = useProduct();
+  const { products } = useFetchProducts();
 
-  const handleRedirection = (id) => {
-    navigate(`/product/${id}`);
-  };
-
-  const handleAdd = (id) => {
-    // Find product to add
-    const productFound = products.find((product) => product.id === id);
-
-    if (!productFound) {
-      console.log("L'identifiant de ce produit est incorrect.");
-      return;
-    }
-
-    // Check if product in cart
-    const indexOfProductAlreadyInCart = cartItems.findIndex((item) => item.id === productFound.id);
-
-    // Already in cart
-    if (indexOfProductAlreadyInCart !== -1) {
-      const updatedCart = [...cartItems];
-      updatedCart[indexOfProductAlreadyInCart].quantity += 1;
-      setCartItems(updatedCart);
-    } else {
-      // add product
-      const productWithQuantity = { ...productFound, quantity: 1 };
-      const updatedCart = [...cartItems, productWithQuantity];
-      setCartItems(updatedCart);
-    }
-  };
   return (
     <ProductStyled>
       {products.map((product) => (
