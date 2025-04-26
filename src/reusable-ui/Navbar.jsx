@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FiShoppingCart } from 'react-icons/fi';
 
-export default function Navbar({ cartCount = 3 }) {
+export default function Navbar({ cartCount }) {
   return (
     <NavbarStyled>
       <div className="navbar-container">

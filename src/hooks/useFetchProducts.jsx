@@ -11,7 +11,7 @@ export const useFetchProducts = () => {
         setProducts(res.data);
       })
       .catch((err) => console.error('Non connecté', err));
-  }, [products]);
+  }, []);
 
   return { products };
 };
