@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import LayoutContext from '../../../context/LayoutContext.jsx';
 import styled from 'styled-components';
 import axios from 'axios';
 
 export default function ProductPage() {
   const [product, setProduct] = useState([]);
   const { id } = useParams();
+
+  const { handleAdd } = useContext(LayoutContext);
 
   useEffect(() => {
     axios.get(`http://localhost:3000/product/${id}`).then((res) => setProduct(res.data));
@@ -37,7 +40,7 @@ export default function ProductPage() {
             </p>
           </div>
 
-          <button>Ajouter au panier</button>
+          <button onClick={() => handleAdd(product.id)}>Ajouter au panier</button>
         </div>
       </div>
     </ProductPageStyled>

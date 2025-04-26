@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '../hooks/UserContext';
+import { useUser } from '../context/UserContext';
 import styled from 'styled-components';
 import axios from 'axios';
 
