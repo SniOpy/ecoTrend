@@ -1,25 +1,14 @@
-import axios from 'axios';
 import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import LayoutContext from '../../../context/LayoutContext';
 
 export default function Cart() {
-  const { cartItems, setCartItems } = useContext(LayoutContext);
+  const { cartItems } = useContext(LayoutContext);
 
+  // displays the basket in real time
   useEffect(() => {
-    const fetchData = async () => {
-      await axios
-        .get('http://localhost:3000/cart')
-        .then((res) => {
-          setCartItems(res.data);
-        })
-        .catch((error) => {
-          console.error('Erreur lors de la requête :', error);
-        });
-    };
-
-    fetchData();
-  }, []);
+    console.log(cartItems);
+  }, [cartItems]);
 
   return (
     <CartStyled>
