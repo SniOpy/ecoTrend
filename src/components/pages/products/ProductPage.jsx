@@ -11,22 +11,25 @@ export default function ProductPage() {
   const { handleAdd } = useContext(LayoutContext);
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/product/${id}`).then((res) => setProduct(res.data));
+    // axios.get(`http://localhost:3000/product/${id}`).then((res) => setProduct(res.data));
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/product/${id}`)
+      .then((res) => setProduct(res.data));
   }, [id]);
   return (
     <ProductPageStyled>
       <div className="container">
         <div className="image">
-          <img src={`/images/products/${product.image_product}`} alt={product.name_product} />
+          <img src={`/images/products/${product.image}`} alt={product.name} />
         </div>
 
         <div className="details">
           <h1>{product.name_product}</h1>
           <p className="category">
-            Catégorie : <span>{product.category?.name_category}</span>
+            Catégorie : <span>{product.category?.name}</span>
           </p>
           <p className="price">{product.price} €</p>
-          <p className="description">{product.description_product}</p>
+          <p className="description">{product.description}</p>
 
           <div className="infos">
             <p>
