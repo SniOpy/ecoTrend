@@ -6,7 +6,7 @@ export const useFetchProducts = () => {
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/products`, { withCredentials: true })
+      .get(`${import.meta.env.VITE_BACKEND_URL}`, { withCredentials: true })
       .then((res) => {
         console.log('Données reçues :', res.data); // Vérification
         setProducts(res.data);

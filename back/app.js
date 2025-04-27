@@ -9,7 +9,7 @@ const port = process.env.PORT || 3000;
 //* Setup
 app.use(
   cors({
-    origin: ['https://eco-trend-92622n2j4-sniopys-projects.vercel.app', 'http://localhost:5173'],
+    origin: '*',
     credentials: true,
   })
 );
