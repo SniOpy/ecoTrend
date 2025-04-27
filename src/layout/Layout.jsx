@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { useProduct } from '../hooks/useProduct.jsx';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Footer from '../components/pages/footer/Footer.jsx';
 
 export default function Layout() {
   const { handleAdd, handleRedirection, totalPrice, handleDelete, cartItems, setCartItems } =
@@ -34,6 +35,7 @@ export default function Layout() {
           closeOnClick
           draggable
         />
+        <Footer />
       </LayoutStyled>
     </LayoutContext.Provider>
   );
