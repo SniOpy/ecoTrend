@@ -12,8 +12,7 @@ const port = process.env.PORT || 3000;
 app.use(
   cors({
     origin: [
-      'https://eco-trend-92622n2j4-sniopys-projects.vercel.app',
-      'https://eco-trend-imyv38dem-sniopys-projects.vercel.app', // ton frontend Vercel
+      'https://eco-trend-front-jjtz1cb0m-sniopys-projects.vercel.app/', // ton frontend Vercel
       'http://localhost:5173', // pour ton développement local
     ],
     credentials: true,
