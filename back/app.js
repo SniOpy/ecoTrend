@@ -9,16 +9,21 @@ const router = require('./app/routers');
 const port = process.env.PORT || 3000;
 
 //* CORS Configuration - Correction
-app.use(
-  cors({
-    origin: [
-      'https://eco-trend-front-git-master-sniopys-projects.vercel.app', // ton frontend Vercel
-      'http://localhost:5173', // pour ton développement local
-    ],
-    credentials: true,
-  })
-);
-
+if (process.env.NODE_ENV === 'production ') {
+  app.use(
+    cors({
+      origin: 'https://eco-trend-front.vercel.app',
+      credentials: true,
+    })
+  );
+} else {
+  app.use(
+    cors({
+      origin: 'http://localhost:5173',
+      credentials: true,
+    })
+  );
+}
 // Middlewares
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
