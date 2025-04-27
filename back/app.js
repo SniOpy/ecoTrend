@@ -9,7 +9,7 @@ const router = require('./app/routers');
 const port = process.env.PORT || 3000;
 
 // CORS Configuration
-if (process.env.NODE_ENV === 'production ') {
+if (process.env.NODE_ENV === 'production') {
   app.use(
     cors({
       origin: 'https://eco-trend-front.vercel.app',
