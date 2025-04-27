@@ -5,9 +5,19 @@ import LayoutContext from '../../../context/LayoutContext';
 
 export default function Product() {
   const { handleAdd, handleRedirection } = useContext(LayoutContext);
-  const { products } = useFetchProducts();
+  const { error, loading, products } = useFetchProducts();
 
-  console.log('products:', products); // pour debug ici aussi
+  if (loading) {
+    return <div className="text-center p-4">Chargement des produits...</div>; // 👈 ici message de chargement
+  }
+
+  if (error) {
+    return <div className="text-center text-red-500 p-4">Erreur lors du chargement.</div>; // 👈 bonus gestion erreur
+  }
+
+  if (products.length === 0) {
+    return <div className="text-center p-4">Aucun produit disponible.</div>;
+  }
 
   return (
     <ProductStyled>

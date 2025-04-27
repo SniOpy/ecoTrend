@@ -3,12 +3,14 @@ import { useParams } from 'react-router-dom';
 import LayoutContext from '../../../context/LayoutContext.jsx';
 import styled from 'styled-components';
 import axios from 'axios';
+import { useFetchProducts } from '../../../hooks/useFetchProducts.jsx';
 
 export default function ProductPage() {
   const [product, setProduct] = useState([]);
   const { id } = useParams();
 
   const { handleAdd } = useContext(LayoutContext);
+  const { error, loading } = useFetchProducts();
 
   useEffect(() => {
     // axios.get(`http://localhost:3000/product/${id}`).then((res) => setProduct(res.data));
@@ -16,6 +18,15 @@ export default function ProductPage() {
       .get(`${import.meta.env.VITE_BACKEND_URL}/product/${id}`)
       .then((res) => setProduct(res.data));
   }, [id]);
+
+  if (loading) {
+    return <div className="text-center p-4">Chargement des produits...</div>; // 👈 ici message de chargement
+  }
+
+  if (error) {
+    return <div className="text-center text-red-500 p-4">Erreur lors du chargement.</div>; // 👈 bonus gestion erreur
+  }
+
   return (
     <ProductPageStyled>
       <div className="container">
