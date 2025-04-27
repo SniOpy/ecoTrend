@@ -13,10 +13,11 @@ export default function ProductPage() {
   const { error, loading } = useFetchProducts();
 
   useEffect(() => {
+    axios;
+    // .get(`http://localhost:3000/product/${id}`)
+    // .then((res) => setProduct(res.data))
     axios
-      .get(`http://localhost:3000/product/${id}`)
-      .then((res) => setProduct(res.data))
-      // axios .get(`${import.meta.env.VITE_BACKEND_URL}/product/${id}`)
+      .get(`${import.meta.env.VITE_BACKEND_URL}/product/${id}`)
       .then((res) => setProduct(res.data));
   }, [id]);
 
