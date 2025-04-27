@@ -9,7 +9,8 @@ import Layout from './layout/Layout.jsx';
 import ProductPage from './components/pages/products/ProductPage.jsx';
 import Cart from './components/pages/cart/Cart.jsx';
 import Blog from './components/pages/blog/Blog.jsx';
-
+import About from './components/pages/about/About.jsx';
+import Contact from './components/pages/contact/Contact.jsx';
 import './App.css';
 
 function App() {
@@ -24,6 +25,8 @@ function App() {
         <Route path="/product/:id" element={<ProductPage />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/aboutus" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<ErrorPage />} />
       </Route>
     </Routes>

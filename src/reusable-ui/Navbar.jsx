@@ -14,7 +14,7 @@ export default function Navbar({ cartCount }) {
 
         <nav className="nav-links">
           <Link to="/">Accueil</Link>
-          <Link to="/about">À propos</Link>
+          <Link to="/aboutus">À propos</Link>
           <Link to="/products">Catalogue</Link>
           <Link to="/blog">Blog</Link>
           <Link to="/contact">Contact</Link>
