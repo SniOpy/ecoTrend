@@ -8,7 +8,7 @@ const router = require('./app/routers');
 
 const port = process.env.PORT || 3000;
 
-//* CORS Configuration - Correction
+// CORS Configuration
 if (process.env.NODE_ENV === 'production ') {
   app.use(
     cors({
@@ -34,15 +34,15 @@ app.get('/', (req, res) => {
   res.send('API ecoTrend fonctionne 🚀');
 });
 
-//* Routes principales
+//Routes principales
 app.use(router);
 
-//* 404 Handler
+// 404 Handler
 app.use((req, res) => {
   res.status(404).send('Page introuvable');
 });
 
-//* Lancement du serveur
+// Launch server
 app.listen(port, () => {
   console.log(`API ecoTrend en route sur le port ${port}`);
 });
