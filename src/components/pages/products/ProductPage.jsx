@@ -13,20 +13,24 @@ export default function ProductPage() {
   const { error, loading } = useFetchProducts();
 
   useEffect(() => {
-    axios;
-    // .get(`http://localhost:3000/product/${id}`)
-    // .then((res) => setProduct(res.data))
+
+    const basedUrl = import.meta.env.VITE_NODE_ENV === 'production'
+    ? `${import.meta.env.VITE_BACKEND_URL}/product/${id}`
+    : `http://localhost:3000/product/${id}`
+
+    
     axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/product/${id}`)
+      .get(basedUrl, { withCredentials: true })
       .then((res) => setProduct(res.data));
+      
   }, [id]);
 
   if (loading) {
-    return <div className="text-center p-4">Chargement des produits...</div>; // 👈 ici message de chargement
+    return <div className="text-center p-4">Chargement des produits...</div>; 
   }
 
   if (error) {
-    return <div className="text-center text-red-500 p-4">Erreur lors du chargement.</div>; // 👈 bonus gestion erreur
+    return <div className="text-center text-red-500 p-4">Erreur lors du chargement.</div>; 
   }
 
   return (
