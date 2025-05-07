@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useContext, useEffect,useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { FiShoppingCart } from 'react-icons/fi';
+import LayoutContext from '../context/LayoutContext';
 
-export default function Navbar({ cartCount }) {
-  return (
+export default function Navbar() {
+
+  const {cartItems} = useContext(LayoutContext);
+  const [cartCount, setCartCount] = useState(0)
+
+ useEffect(() => {
+ 
+  const countItems = cartItems.reduce((total, item) => {
+   return total + item.quantity
+  }, 0);
+ setCartCount(countItems);
+  
+ }, [cartItems])
+
+ return (
     <NavbarStyled>
       <div className="navbar-container">
         <div className="logo">
