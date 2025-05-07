@@ -7,9 +7,13 @@ export const useFetchProducts = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+
+    const basedUrl = import.meta.env.VITE_NODE_ENV === 'production'
+    ? `${import.meta.env.VITE_BACKEND_URL}/products`
+    : `http://localhost:3000/products`
+    
     axios
-      .get(`${import.meta.env.VITE_BACKEND_URL}/products`, { withCredentials: true })
-      // .get(`http://localhost:3000/products`, { withCredentials: true })
+      .get(basedUrl, { withCredentials: true })
       .then((res) => {
         setProducts(res.data);
         setLoading(false);

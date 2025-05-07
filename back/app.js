@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-//* Test route - API health check
+// Test route - API health check
 app.get('/', (req, res) => {
   res.send('API ecoTrend fonctionne 🚀');
 });
