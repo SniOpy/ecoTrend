@@ -1,9 +1,11 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import LayoutContext from '../../../context/LayoutContext';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Cart() {
   const { cartItems, totalPrice, handleDelete, setCartItems } = useContext(LayoutContext);
+  const navigate = useNavigate();
 
   const onDelete = (id) => {
     handleDelete(id);
@@ -58,7 +60,8 @@ export default function Cart() {
               <span>Total :</span>
               <strong>{totalPrice.toFixed(2)} €</strong>
             </div>
-            <button className="checkout">Valider la commande</button>
+            
+            <Link className='checkout' to={'/checkout'}>Valider la commande</Link>
           </div>
         )}
       </div>

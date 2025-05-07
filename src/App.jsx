@@ -11,7 +11,10 @@ import Cart from './components/pages/cart/Cart.jsx';
 import Blog from './components/pages/blog/Blog.jsx';
 import About from './components/pages/about/About.jsx';
 import Contact from './components/pages/contact/Contact.jsx';
+import Checkout from './components/pages/cart/Checkout.jsx';
+
 import './App.css';
+
 
 function App() {
   return (
@@ -27,6 +30,7 @@ function App() {
         <Route path="/blog" element={<Blog />} />
         <Route path="/aboutus" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="*" element={<ErrorPage />} />
       </Route>
     </Routes>
