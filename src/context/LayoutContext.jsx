@@ -6,5 +6,7 @@ export default createContext({
 
   totalPrice: () => {},
   handleDelete: () => {},
-  handleAdd: () => {},
+  handleAdd: () => { },
+  
+  countItems: () => {},
 });

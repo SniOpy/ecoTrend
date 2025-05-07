@@ -1,13 +1,37 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useContext } from 'react';
 import styled from 'styled-components';
 import LayoutContext from '../../../context/LayoutContext.jsx'
 
 export default function Checkout() {
 
-    const {cartItems} = useContext(LayoutContext)
+  const { cartItems, totalPrice } = useContext(LayoutContext)
+  const [formData, setFormData] = useState({
+    lastname: '',
+    firstname: '',
+    address: '',
+    address_complement: '',
+    zipcode: '',
+    country: '',
+    deliveryMethod: '',
+    paymentMethod: '',
+  })
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prevData) => ({
+      ...prevData, 
+      [name] : value,
+    }))
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+  }
     return (
-        <CheckoutStyled>
+        <CheckoutStyled onSubmit={handleSubmit}>
           <div className="container">
             <h1>Validation de la commande</h1>
     
@@ -15,29 +39,38 @@ export default function Checkout() {
               {/* Adresse de livraison */}
               <div className="section">
                 <h2>Adresse de livraison</h2>
-                <input type="text" placeholder="Nom et Prénom" />
-                <input type="text" placeholder="Adresse" />
-                <input type="text" placeholder="Ville" />
-                <input type="text" placeholder="Code Postal" />
-                <input type="text" placeholder="Pays" />
+              <input
+                type="text"
+                placeholder="Nom "
+                name='lastname'
+                value={formData.lastname}
+                onChange={handleChange}
+              />
+              
+              <input type="text" placeholder="Prénom" name='firstname' value={formData.firstname} onChange={handleChange}/>
+                <input type="text" placeholder="Adresse" name='address' value={formData.address} onChange={handleChange}/>
+                <input type="text" placeholder="Complément d'adresse" name='address_complement' value={formData.address_complement} onChange={handleChange}/>
+                <input type="text" placeholder="Ville" name='city' value={formData.city} onChange={handleChange}/>
+                <input type="number" placeholder="Code Postal" name='zipcode' value={formData.zipcode} onChange={handleChange}/>
+                <input type="text" placeholder="Pays" name='country' value={formData.country} onChange={handleChange}/>
               </div>
     
               {/* Mode de livraison */}
               <div className="section">
                 <h2>Mode de livraison</h2>
-                <select>
-                  <option value="standard">Standard (3-5 jours) - Gratuit</option>
-                  <option value="express">Express (24h) - 5.99 €</option>
+                <select name="deliveryMethod" value={formData.deliveryMethod} onChange={handleChange}>
+                  <option name="standard" value="standard">Standard (3-5 jours) - Gratuit</option>
+                  <option name="express" value="express">Express (24h) - 5.99 €</option>
                 </select>
               </div>
     
               {/* Méthode de paiement */}
               <div className="section">
                 <h2>Méthode de paiement</h2>
-                <select>
-                  <option value="credit-card">Carte Bancaire</option>
-                  <option value="paypal">PayPal</option>
-                  <option value="bank-transfer">Virement Bancaire</option>
+                <select name="paymentMethod" value={formData.paymentMethod} onChange={handleChange}>
+                  <option name="credit-card" value="credit-card">Carte Bancaire</option>
+                  <option name="paypal" value="paypal">PayPal</option>
+                  <option name="bank-transfer" value="bank-transfer">Virement Bancaire</option>
                 </select>
               </div>
     
@@ -53,18 +86,18 @@ export default function Checkout() {
                 </ul>
                 <div className="total">
                   <span>Total :</span>
-                  <strong>150 €</strong>
+                  <strong>{totalPrice.toFixed(2)} €</strong>
                 </div>
               </div>
     
-              <button >Valider la commande</button>
+              <button type='submit'>Valider la commande</button>
             </div>
           </div>
         </CheckoutStyled>
       );
     }
     
-    const CheckoutStyled = styled.div`
+    const CheckoutStyled = styled.form`
       background-color: #f9f9f9;
       min-height: 100vh;
       font-family: 'Open Sans', sans-serif;

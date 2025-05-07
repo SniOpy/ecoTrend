@@ -6,18 +6,8 @@ import LayoutContext from '../context/LayoutContext';
 
 export default function Navbar() {
 
-  const {cartItems} = useContext(LayoutContext);
-  const [cartCount, setCartCount] = useState(0)
-
- useEffect(() => {
+  const {cartItems, countItems } = useContext(LayoutContext);
  
-  const countItems = cartItems.reduce((total, item) => {
-   return total + item.quantity
-  }, 0);
- setCartCount(countItems);
-  
- }, [cartItems])
-
  return (
     <NavbarStyled>
       <div className="navbar-container">
@@ -37,7 +27,7 @@ export default function Navbar() {
         <div className="cart">
           <Link to="/cart" className="cart-icon">
             <FiShoppingCart size={24} />
-            {cartCount > 0 && <span className="badge">{cartCount}</span>}
+            {countItems > 0 && <span className="badge">{countItems}</span>}
           </Link>
         </div>
       </div>

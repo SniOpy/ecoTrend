@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useEffect, useState } from 'react';
 import Navbar from '../reusable-ui/Navbar.jsx';
 import { Outlet } from 'react-router-dom';
 import LayoutContext from '../context/LayoutContext.jsx';
@@ -11,6 +12,12 @@ import Footer from '../components/pages/footer/Footer.jsx';
 export default function Layout() {
   const { handleAdd, handleRedirection, totalPrice, handleDelete, cartItems, setCartItems } =
     useProduct();
+  const [countItems, setCountItems] = useState(0);
+
+  useEffect(() => {
+    const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
+    setCountItems(totalItems);
+  }, [cartItems]);
 
   const layoutContext = {
     cartItems,
@@ -19,6 +26,7 @@ export default function Layout() {
     handleRedirection,
     totalPrice,
     handleDelete,
+    countItems,
   };
   return (
     <LayoutContext.Provider value={layoutContext}>
