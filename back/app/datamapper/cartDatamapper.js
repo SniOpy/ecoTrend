@@ -1,35 +1,68 @@
+const client = require("../services/clientPg");
+
 const cartDatamapper = {
-  getProductsCartById: async () => {
+  createOrder: async (informationOrder) => {
+
     try {
-      const fakeCart = [
-        {
-          product_id: 12,
-          name_product: 'Mug personnalisé',
-          price: 14.99,
-          quantity: 2,
-          image_product: 'sweater.png',
-        },
-        {
-          product_id: 7,
-          name_product: 'Sac en toile',
-          price: 24.9,
-          quantity: 1,
-          image_product: 'tote.png',
-        },
-        {
-          product_id: 5,
-          name_product: 'Puzzle photo',
-          price: 19.5,
-          quantity: 3,
-          image_product: 'tshirt.png',
-        },
+      const orderToAdd = informationOrder;
+
+     const query = `
+      INSERT INTO public."order_table" (  
+      lastname, 
+      firstname, 
+      items, 
+      address, 
+      address_complement, 
+      city, 
+      zipcode, 
+      country, 
+      delivery_method, 
+      payment_method, 
+      total_price, 
+      status_order
+    ) VALUES ($1, $2, $3::jsonb, $4, $5, $6, $7, $8, $9, $10, $11, $12);
+  `;
+
+
+      const {
+        lastname,
+        firstname,
+        items, 
+        address,
+        address_complement,
+        city,
+        zipcode,
+        country,
+        delivery_method,
+        payment_method,
+        totalPrice
+      } = orderToAdd;
+      
+      const values = [
+        lastname,
+        firstname,
+        JSON.stringify(items),
+        address,
+        address_complement,
+        city,
+        zipcode,
+        country,
+        delivery_method,
+        payment_method,
+        totalPrice,
+        "en cours de traitement"
       ];
 
-      return fakeCart;
+      const result = await client.query(query, values);
+
+      console.log("✅ Insertion réussie :", result.rows[0]);
+      return result.rows[0];
+
     } catch (error) {
-      console.error('Aucun produit dans le panier');
+      console.error("❌ Erreur lors de l'insertion :", error.message);
+      throw new Error(error.message);
     }
-  },
+  }
 };
 
 module.exports = cartDatamapper;

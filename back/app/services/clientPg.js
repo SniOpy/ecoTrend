@@ -6,11 +6,16 @@ const client = new Pool({
   ssl: {
     rejectUnauthorized: false,
   },
+  statement_timeout: 5000, // 
 });
 
 client
   .connect()
-  .then(() => console.log('connexion établie'))
-  .catch((err) => console.error('Erreur de connexion : ', err));
+  .then(() => {
+    console.log('🟢 Connexion établie à PostgreSQL');
+    // On force le search_path
+    client.query('SET search_path TO public');
+  })
+  .catch((err) => console.error('🔴 Erreur de connexion : ', err.message));
 
 module.exports = client;

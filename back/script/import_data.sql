@@ -27,10 +27,6 @@ VALUES
 ('Porte-feuille', 'Compact, léger et 100 % végétal, ce portefeuille en liège allie esthétique naturelle et durabilité.', 18.75, 20, 'porte-feuille.png', 4),
 ('Echarpe', 'Élégante et douce, cette écharpe en coton biologique offre confort et légèreté.', 45.99, 20, 'echarpe.png', 4);
 
--- Insertion de commandes
-INSERT INTO "order" ("user_id", "status_order")
-VALUES 
-(1, 'en cours'),
-(2, 'livrée');
+
 
 COMMIT;

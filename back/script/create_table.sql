@@ -2,7 +2,7 @@
 BEGIN;
 -- Suppression des tables
 
-DROP TABLE IF EXISTS "user", "order", "product", "category";
+DROP TABLE IF EXISTS "user","order_table", "product", "category" CASCADE;
 
 
 -- Création des tables
@@ -37,12 +37,23 @@ CREATE TABLE "category" (
     updated_at TIMESTAMPTZ
 );
 
-CREATE TABLE "order" (
-    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    user_id INTEGER NOT NULL,
+CREATE TABLE "order_table" (
+    id SERIAL PRIMARY KEY,
+    lastname VARCHAR(100) NOT NULL,
+    firstname VARCHAR(100) NOT NULL,
+    items JSONB NOT NULL,  
+    address TEXT NOT NULL,
+    address_complement TEXT,
+    city VARCHAR(100) NOT NULL,
+    zipcode VARCHAR(20) NOT NULL,
+    country VARCHAR(100) NOT NULL,
+    delivery_method VARCHAR(50) NOT NULL,
+    payment_method VARCHAR(50) NOT NULL,
+    total_price DECIMAL(10, 2) NOT NULL,
     status_order VARCHAR(42) NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ
 );
+
 
 COMMIT;
