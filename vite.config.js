@@ -5,9 +5,9 @@ export default defineConfig({
   plugins: [react()],
   server: {
     watch: {
-      usePolling: true, // Important pour certains environnements Docker ou WSL
+      usePolling: true, 
     },
     port: 5173,
-    open: true, // Ouvre automatiquement le navigateur
+    open: true, 
   },
 });
