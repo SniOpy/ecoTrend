@@ -9,15 +9,12 @@ export const useFetchProducts = () => {
   useEffect(() => {
     const basedUrl =
       import.meta.env.VITE_NODE_ENV === 'production'
-        ? `${import.meta.env.VITE_BACKEND_URL}/products`
+        ? `${import.meta.env.VITE_BACKEND_URL}products`
         : `http://localhost:3000/products`;
-
-    console.log('🔄 Tentative de récupération des produits depuis:', basedUrl);
 
     axios
       .get(basedUrl, { withCredentials: true })
       .then((res) => {
-        console.log('✅ Produits récupérés:', res.data);
         setProducts(res.data || []);
         setLoading(false);
       })

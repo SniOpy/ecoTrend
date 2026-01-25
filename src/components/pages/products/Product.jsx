@@ -8,20 +8,13 @@ export default function Product() {
   const { error, loading, products } = useFetchProducts();
 
   if (loading) {
-    return <div className="text-center p-4">Chargement des produits...</div>; // 👈 ici message de chargement
+    return <div className="text-center p-4">Chargement des produits...</div>;
   }
 
   if (error) {
-    const errorMessage = error.response?.data?.message || error.message || 'Erreur inconnue';
-    const statusCode = error.response?.status;
     return (
       <div className="text-center text-red-500 p-4">
         <p className="font-bold">Erreur lors du chargement des produits</p>
-        <p className="text-sm mt-2">{errorMessage}</p>
-        {statusCode && <p className="text-xs mt-1">Code d'erreur: {statusCode}</p>}
-        <p className="text-xs mt-2 text-gray-500">
-          Vérifiez que le serveur backend est démarré sur http://localhost:3000
-        </p>
       </div>
     );
   }

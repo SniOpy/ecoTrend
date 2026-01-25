@@ -3,34 +3,71 @@ import { useParams } from 'react-router-dom';
 import LayoutContext from '../../../context/LayoutContext.jsx';
 import styled from 'styled-components';
 import axios from 'axios';
-import { useFetchProducts } from '../../../hooks/useFetchProducts.jsx';
 
 export default function ProductPage() {
-  const [product, setProduct] = useState([]);
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const { id } = useParams();
 
   const { handleAdd } = useContext(LayoutContext);
-  const { error, loading } = useFetchProducts();
 
   useEffect(() => {
+    const basedUrl =
+      import.meta.env.VITE_NODE_ENV === 'production'
+        ? `${import.meta.env.VITE_BACKEND_URL}/product/${id}`
+        : `http://localhost:3000/product/${id}`;
 
-    const basedUrl = import.meta.env.VITE_NODE_ENV === 'production'
-    ? `${import.meta.env.VITE_BACKEND_URL}/product/${id}`
-    : `http://localhost:3000/product/${id}`
+    console.log('🔄 Tentative de récupération du produit depuis:', basedUrl);
 
-    
+    setLoading(true);
+    setError(null);
+
     axios
       .get(basedUrl, { withCredentials: true })
-      .then((res) => setProduct(res.data));
-      
+      .then((res) => {
+        console.log('✅ Produit récupéré:', res.data);
+        setProduct(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('❌ Erreur lors de la récupération du produit:', err);
+        console.error('📋 Détails:', {
+          message: err.message,
+          response: err.response?.data,
+          status: err.response?.status,
+          url: basedUrl,
+        });
+        setError(err);
+        setLoading(false);
+      });
   }, [id]);
 
   if (loading) {
-    return <div className="text-center p-4">Chargement des produits...</div>; 
+    return <div className="text-center p-4">Chargement du produit...</div>;
   }
 
   if (error) {
-    return <div className="text-center text-red-500 p-4">Erreur lors du chargement.</div>; 
+    const errorMessage = error.response?.data?.message || error.message || 'Erreur inconnue';
+    const statusCode = error.response?.status;
+    return (
+      <div className="text-center text-red-500 p-4">
+        <p className="font-bold">Erreur lors du chargement du produit</p>
+        <p className="text-sm mt-2">{errorMessage}</p>
+        {statusCode && <p className="text-xs mt-1">Code d'erreur: {statusCode}</p>}
+        <p className="text-xs mt-2 text-gray-500">
+          Vérifiez que le serveur backend est accessible
+        </p>
+      </div>
+    );
+  }
+
+  if (!product || !product.id) {
+    return (
+      <div className="text-center p-4">
+        <p>Produit introuvable</p>
+      </div>
+    );
   }
 
   return (
@@ -41,11 +78,11 @@ export default function ProductPage() {
         </div>
 
         <div className="details">
-          <h1>{product.name_product}</h1>
+          <h1>{product.name}</h1>
           <p className="category">
-            Catégorie : <span>{product.category?.name}</span>
+            Catégorie : <span>{product.category?.name_category || 'Non catégorisé'}</span>
           </p>
-          <p className="price">{product.price} €</p>
+          <p className="price">{product.price?.toFixed(2)} €</p>
           <p className="description">{product.description}</p>
 
           <div className="infos">
