@@ -34,6 +34,27 @@ app.get('/', (req, res) => {
   res.send('API ecoTrend fonctionne 🚀');
 });
 
+// Test route - Database connection check
+app.get('/test-db', async (req, res) => {
+  try {
+    const client = require('./app/services/clientPg');
+    const result = await client.query('SELECT COUNT(*) as count FROM "product";');
+    res.json({
+      success: true,
+      databaseConnected: true,
+      productCount: parseInt(result.rows[0].count),
+      databaseUrl: process.env.DATABASE_URL ? 'Configurée' : 'Non configurée'
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      databaseConnected: false,
+      error: error.message,
+      databaseUrl: process.env.DATABASE_URL ? 'Configurée' : 'Non configurée'
+    });
+  }
+});
+
 //Routes principales
 app.use(router);
 

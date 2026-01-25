@@ -4,13 +4,17 @@ const productController = {
   findProducts: async (req, res) => {
     try {
       const productsFounded = await productDatamapper.getAllProducts();
-
-      if (productsFounded) {
-        res.status(200).json(productsFounded);
-      }
+      
+      // Toujours retourner un tableau, même s'il est vide
+      res.status(200).json(productsFounded || []);
     } catch (error) {
-      console.error("Aucun produit n'a été trouvé", error);
-      res.status(404).json({ message: "Aucun produit n'a été trouvé" });
+      console.error("Erreur lors de la récupération des produits", error);
+      console.error("Stack:", error.stack);
+      res.status(500).json({ 
+        message: "Erreur serveur lors de la récupération des produits", 
+        error: error.message,
+        stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+      });
     }
   },
   findProductById: async (req, res) => {
