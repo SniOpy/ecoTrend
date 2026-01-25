@@ -12,7 +12,18 @@ export default function Product() {
   }
 
   if (error) {
-    return <div className="text-center text-red-500 p-4">Erreur lors du chargement.</div>; // 👈 bonus gestion erreur
+    const errorMessage = error.response?.data?.message || error.message || 'Erreur inconnue';
+    const statusCode = error.response?.status;
+    return (
+      <div className="text-center text-red-500 p-4">
+        <p className="font-bold">Erreur lors du chargement des produits</p>
+        <p className="text-sm mt-2">{errorMessage}</p>
+        {statusCode && <p className="text-xs mt-1">Code d'erreur: {statusCode}</p>}
+        <p className="text-xs mt-2 text-gray-500">
+          Vérifiez que le serveur backend est démarré sur http://localhost:3000
+        </p>
+      </div>
+    );
   }
 
   if (products.length === 0) {

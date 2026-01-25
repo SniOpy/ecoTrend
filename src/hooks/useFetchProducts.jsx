@@ -7,19 +7,28 @@ export const useFetchProducts = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    const basedUrl =
+      import.meta.env.VITE_NODE_ENV === 'production'
+        ? `${import.meta.env.VITE_BACKEND_URL}/products`
+        : `http://localhost:3000/products`;
 
-    const basedUrl = import.meta.env.VITE_NODE_ENV === 'production'
-    ? `${import.meta.env.VITE_BACKEND_URL}/products`
-    : `http://localhost:3000/products`
-    
+    console.log('🔄 Tentative de récupération des produits depuis:', basedUrl);
+
     axios
       .get(basedUrl, { withCredentials: true })
       .then((res) => {
-        setProducts(res.data);
+        console.log('✅ Produits récupérés:', res.data);
+        setProducts(res.data || []);
         setLoading(false);
       })
       .catch((err) => {
-        console.error('Erreur connexion', err);
+        console.error('❌ Erreur lors de la récupération des produits:', err);
+        console.error('📋 Détails:', {
+          message: err.message,
+          response: err.response?.data,
+          status: err.response?.status,
+          url: basedUrl,
+        });
         setError(err);
         setLoading(false);
       });
