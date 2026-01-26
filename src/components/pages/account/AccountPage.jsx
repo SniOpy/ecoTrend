@@ -9,53 +9,117 @@ export default function AccountPage() {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
-  if (!userData) {
-    navigate('/login');
-  }
-
   useEffect(() => {
+    // Construire l'URL de l'API selon l'environnement
+    const getApiUrl = () => {
+      const isProduction =
+        import.meta.env.PROD ||
+        import.meta.env.MODE === 'production' ||
+        import.meta.env.VITE_NODE_ENV === 'production' ||
+        window.location.hostname !== 'localhost';
+
+      const backendUrl = import.meta.env.VITE_BACKEND_URL || '';
+
+      if (isProduction && backendUrl) {
+        const base = backendUrl.endsWith('/') ? backendUrl.slice(0, -1) : backendUrl;
+        return `${base}/account`;
+      } else if (isProduction && !backendUrl) {
+        return 'https://ecotrend-4.onrender.com/account';
+      } else {
+        return 'http://localhost:3000/account';
+      }
+    };
+
     const storedData = localStorage.getItem('userData');
 
     if (storedData) {
       setUserData(JSON.parse(storedData));
     }
+
+    const apiUrl = getApiUrl();
     axios
-      .get('http://localhost:3000/account', { withCredentials: true })
+      .get(apiUrl, { withCredentials: true })
       .then((res) => {
         setUserData(res.data.user);
         localStorage.setItem('userData', JSON.stringify(res.data.user));
       })
-      .catch((err) => console.error('Non connecté', err))
+      .catch((err) => {
+        console.error('Non connecté', err);
+        // Si erreur 401, rediriger vers login
+        if (err.response?.status === 401) {
+          localStorage.removeItem('userData');
+          localStorage.removeItem('token');
+          setUserData(null);
+          navigate('/login');
+        }
+      })
       .finally(() => {
         setIsLoading(false);
       });
-  }, []);
+  }, [navigate, setUserData]);
 
   const handleLogout = async () => {
     try {
-      const res = await axios.post('http://localhost:3000/logout', null, {
+      // Construire l'URL de l'API selon l'environnement
+      const getApiUrl = () => {
+        const isProduction =
+          import.meta.env.PROD ||
+          import.meta.env.MODE === 'production' ||
+          import.meta.env.VITE_NODE_ENV === 'production' ||
+          window.location.hostname !== 'localhost';
+
+        const backendUrl = import.meta.env.VITE_BACKEND_URL || '';
+
+        if (isProduction && backendUrl) {
+          const base = backendUrl.endsWith('/') ? backendUrl.slice(0, -1) : backendUrl;
+          return `${base}/logout`;
+        } else if (isProduction && !backendUrl) {
+          return 'https://ecotrend-4.onrender.com/logout';
+        } else {
+          return 'http://localhost:3000/logout';
+        }
+      };
+
+      const apiUrl = getApiUrl();
+      const res = await axios.post(apiUrl, null, {
         withCredentials: true,
       });
 
       if (res.status === 200) {
+        // Nettoyer le stockage local
         localStorage.removeItem('userData');
-        setUserData(null); // initialize state
+        localStorage.removeItem('token');
+        setUserData(null);
 
-        navigate('/login'); // redirection to login
+        navigate('/login');
       } else {
         console.error('Erreur de déconnexion');
       }
     } catch (error) {
       console.error('Erreur de requête : ', error);
+      // Même en cas d'erreur, nettoyer le stockage local
+      localStorage.removeItem('userData');
+      localStorage.removeItem('token');
+      setUserData(null);
+      navigate('/login');
     }
   };
 
   if (isLoading) {
-    return <p>Chargement des données...</p>;
+    return (
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        minHeight: '100vh' 
+      }}>
+        <p>Chargement des données...</p>
+      </div>
+    );
   }
 
   if (!userData) {
-    return navigate('/login');
+    return null; // ProtectedRoute gère la redirection
   }
 
   return (

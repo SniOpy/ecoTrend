@@ -29,7 +29,7 @@ app.use(
 
       // Normaliser l'origine (enlever le slash final si présent)
       const normalizedOrigin = origin.replace(/\/$/, '');
-      
+
       // Logger pour le debug
       console.log(`🔍 CORS Check - Origin reçue: ${origin}`);
       console.log(`🔍 CORS Check - Origin normalisée: ${normalizedOrigin}`);

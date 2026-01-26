@@ -1,32 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import Form from '../../../reusable-ui/Form.jsx';
 import Logo from '../../../reusable-ui/Logo';
 import FormInformation from '../../../reusable-ui/FormInformation.jsx';
 import LoginForm from './LoginForm.jsx';
 
 export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleChange = (e, setter) => {
-    setter(e.target.value);
-  };
-
-  const onEmailChange = (e) => handleChange(e, setEmail);
-  const onPasswordChange = (e) => handleChange(e, setPassword);
-
   return (
     <LoginPageStyled>
       <div className="form-wrapper">
         <Logo />
         <FormInformation title="Se connecter" text="Connectez-vous à votre compte" />
-        <LoginForm
-          onEmailChange={onEmailChange}
-          onPasswordChange={onPasswordChange}
-          email={email}
-          password={password}
-        />
+        <LoginForm />
       </div>
     </LoginPageStyled>
   );

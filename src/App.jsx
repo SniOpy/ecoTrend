@@ -12,6 +12,7 @@ import Blog from './components/pages/blog/Blog.jsx';
 import About from './components/pages/about/About.jsx';
 import Contact from './components/pages/contact/Contact.jsx';
 import Checkout from './components/pages/cart/Checkout.jsx';
+import ProtectedRoute from './components/auth/ProtectedRoute.jsx';
 
 import './App.css';
 
@@ -23,7 +24,14 @@ function App() {
         <Route path="/" element={<Homepage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signin" element={<SigninPage />} />
-        <Route path="/account" element={<AccountPage />} />
+        <Route 
+          path="/account" 
+          element={
+            <ProtectedRoute>
+              <AccountPage />
+            </ProtectedRoute>
+          } 
+        />
         <Route path="/products" element={<Products />} />
         <Route path="/product/:id" element={<ProductPage />} />
         <Route path="/cart" element={<Cart />} />

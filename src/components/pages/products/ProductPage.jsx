@@ -13,12 +13,29 @@ export default function ProductPage() {
   const { handleAdd } = useContext(LayoutContext);
 
   useEffect(() => {
-    const basedUrl =
-      import.meta.env.VITE_NODE_ENV === 'production'
-        ? `${import.meta.env.VITE_BACKEND_URL}product/${id}`
-        : `http://localhost:3000/product/${id}`;
+    // Construire l'URL correctement en gérant les slashes
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || '';
+    const isProduction = import.meta.env.VITE_NODE_ENV === 'production';
+    
+    let basedUrl;
+    if (isProduction) {
+      // S'assurer qu'il y a un slash entre l'URL de base et le chemin
+      const base = backendUrl.endsWith('/') ? backendUrl.slice(0, -1) : backendUrl;
+      basedUrl = `${base}/product/${id}`;
+    } else {
+      basedUrl = `http://localhost:3000/product/${id}`;
+    }
 
     console.log('🔄 Tentative de récupération du produit depuis:', basedUrl);
+    console.log('📋 Configuration:', {
+      isProduction,
+      hostname: window.location.hostname,
+      MODE: import.meta.env.MODE,
+      PROD: import.meta.env.PROD,
+      VITE_NODE_ENV: import.meta.env.VITE_NODE_ENV,
+      VITE_BACKEND_URL: import.meta.env.VITE_BACKEND_URL,
+      url: basedUrl,
+    });
 
     setLoading(true);
     setError(null);
