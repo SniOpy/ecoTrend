@@ -15,7 +15,7 @@ export default function ProductPage() {
   useEffect(() => {
     const basedUrl =
       import.meta.env.VITE_NODE_ENV === 'production'
-        ? `${import.meta.env.VITE_BACKEND_URL}/product/${id}`
+        ? `${import.meta.env.VITE_BACKEND_URL}product/${id}`
         : `http://localhost:3000/product/${id}`;
 
     console.log('🔄 Tentative de récupération du produit depuis:', basedUrl);
@@ -26,7 +26,6 @@ export default function ProductPage() {
     axios
       .get(basedUrl, { withCredentials: true })
       .then((res) => {
-        console.log('✅ Produit récupéré:', res.data);
         setProduct(res.data);
         setLoading(false);
       })
@@ -55,9 +54,7 @@ export default function ProductPage() {
         <p className="font-bold">Erreur lors du chargement du produit</p>
         <p className="text-sm mt-2">{errorMessage}</p>
         {statusCode && <p className="text-xs mt-1">Code d'erreur: {statusCode}</p>}
-        <p className="text-xs mt-2 text-gray-500">
-          Vérifiez que le serveur backend est accessible
-        </p>
+        <p className="text-xs mt-2 text-gray-500">Vérifiez que le serveur backend est accessible</p>
       </div>
     );
   }

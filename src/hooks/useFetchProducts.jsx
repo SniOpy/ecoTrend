@@ -12,6 +12,8 @@ export const useFetchProducts = () => {
         ? `${import.meta.env.VITE_BACKEND_URL}products`
         : `http://localhost:3000/products`;
 
+    console.log('🔄 Tentative de récupération des produits depuis:', import.meta.env.VITE_NODE_ENV);
+
     axios
       .get(basedUrl, { withCredentials: true })
       .then((res) => {
